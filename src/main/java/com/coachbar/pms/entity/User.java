@@ -47,6 +47,11 @@ public class User implements Serializable {
     @Column(name = "username", nullable = false, unique = true, length = 50)
     private String userName;
 
+    @NotBlank(message = "Password must not be blank")
+    @Size(min = 6, message = "Password must be at least 6 characters")
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @NotBlank(message = "First Name must not be blank")
     @Size(max = 50, message = "First Name must not be greater than 50 in length")
     @Column(name = "first_name", nullable = false, length = 50)
@@ -99,6 +104,14 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
     public String getFirstName() {
         return firstName;
     }
