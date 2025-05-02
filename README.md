@@ -85,6 +85,13 @@ mvn spring-boot:run
 
 ---
 
+## ✅ Testing
+
+The project includes a unit test for the `createProduct` endpoint in `ProductController`, which:
+
+- Mocks the `ProductService`
+- Validates correct HTTP response and JSON structure
+
 ## 🧑‍💻 Author
 
 Developed by [Farha Mansuri]
