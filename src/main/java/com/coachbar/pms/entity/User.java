@@ -5,6 +5,8 @@
  */
 package com.coachbar.pms.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -40,6 +42,8 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "Auto-generated ID", accessMode = Schema.AccessMode.READ_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @NotBlank(message = "Username must not be blank")
@@ -65,6 +69,8 @@ public class User implements Serializable {
     @NotNull(message = "Role is mandatory")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
+    @Schema(description = "User role added by default", accessMode = Schema.AccessMode.READ_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Role role;
 
     @Column(name = "active", columnDefinition = "TINYINT(1) DEFAULT 1")
@@ -72,20 +78,28 @@ public class User implements Serializable {
 
     @CreatedBy
     @Column(name = "created_by", nullable = false, updatable = false)
+    @Schema(description = "ID of the user who created this record", accessMode = Schema.AccessMode.READ_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long createdBy;
 
     @CreatedDate
     @Column(name = "created_date", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @Schema(description = "Timestamp when this record was created", accessMode = Schema.AccessMode.READ_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createdDate;
 
     @LastModifiedBy
     @Column(name = "updated_by", nullable = false)
+    @Schema(description = "ID of the user who updated this record", accessMode = Schema.AccessMode.READ_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long updatedBy;
 
     @LastModifiedDate
     @Column(name = "updated_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @Schema(description = "Timestamp when this record was updated", accessMode = Schema.AccessMode.READ_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date updatedDate;
 
     public Long getId() {
@@ -111,7 +125,7 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public String getFirstName() {
         return firstName;
     }

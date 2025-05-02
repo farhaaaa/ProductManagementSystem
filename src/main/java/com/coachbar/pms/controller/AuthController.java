@@ -7,6 +7,12 @@ package com.coachbar.pms.controller;
 
 import com.coachbar.pms.auth.JwtTokenUtil;
 import com.coachbar.pms.auth.LogInRequest;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Collections;
 import java.util.Map;
 import org.apache.commons.logging.Log;
@@ -30,16 +36,22 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/authenticate")
+@Tag(name = "Authentication", description = "Manage user login")
 public class AuthController {
 
     private final static Log logger = LogFactory.getLog(AuthController.class);
-    
+
     @Autowired
     private AuthenticationManager authManager;
 
     @Autowired
     private JwtTokenUtil jwtTokenProvider;
 
+    @Operation(summary = "User Login", description = "Authenticates user credentials and returns a JWT token if successful.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Login successful", content = @Content(schema = @Schema(example = "{\"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6...\"}"))),
+        @ApiResponse(responseCode = "401", description = "Invalid username or password", content = @Content(schema = @Schema(example = "{\"error\": \"Invalid username or password\"}")))
+    })
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> login(@RequestBody LogInRequest request) {
         try {
